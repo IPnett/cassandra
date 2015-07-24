@@ -779,7 +779,7 @@ client_encryption_options:
     # protocol: TLS
     # algorithm: SunX509
     # store_type: JKS
-    cipher_suites: [<%= @client_cipher_suites.sort.map { |v| "'#{v}'" }.join(', ') %>]]
+    cipher_suites: [<%= @client_cipher_suites.sort.map { |v| "'#{v}'" }.join(', ') %>]
 
 # internode_compression controls whether traffic between nodes is
 # compressed.
