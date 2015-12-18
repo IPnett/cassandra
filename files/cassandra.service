@@ -1,0 +1,16 @@
+[Unit]
+Description=Cassandra
+After=syslog.target network.target auditd.service
+
+[Service]
+User=cassandra
+Group=cassandra
+WorkingDirectory=/
+ExecStart=/usr/sbin/cassandra
+KillMode=process
+Restart=always
+RestartSec=10s
+TimeoutStopSec=100
+
+[Install]
+WantedBy=multi-user.target

@@ -49,7 +49,8 @@ class cassandra (
   $snapshot_before_compaction            = false,
   $start_native_transport                = true,
   $start_rpc                             = true,
-  $storage_port                          = 7000
+  $storage_port                          = 7000,
+  $systemd                               = false
   ) {
   case $::osfamily {
     'RedHat': {
@@ -57,6 +58,23 @@ class cassandra (
         $cfg_path = '/etc/cassandra/default.conf'
       } else {
         $cfg_path = $config_path
+      }
+
+      if ( $systemd ) {
+        file { "/usr/lib/systemd/system/cassandra.service":
+          ensure  => file,
+          owner   => 'root',
+          group   => 'root',
+          source  => 'puppet:///modules/cassandra/cassandra.service',
+          before  => Service['cassandra'];
+
+        "/etc/rc.d/init.d/cassandra":
+          ensure  => absent,
+          before  => Service['cassandra'],
+          after   => Package[ $cassandra_package_name ];
+
+        }
+
       }
 
       if $manage_dsc_repo == true {
