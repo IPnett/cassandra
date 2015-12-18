@@ -6,11 +6,16 @@ After=syslog.target network.target auditd.service
 User=cassandra
 Group=cassandra
 WorkingDirectory=/
-ExecStart=/usr/sbin/cassandra
+ExecStart=/usr/sbin/cassandra -f -p /var/run/cassandra/cassandra.pid
+PidFile=/var/run/cassandra/cassandra.pid
 KillMode=process
 Restart=always
 RestartSec=10s
 TimeoutStopSec=100
+LimitNOFILE=100000
+LimitMEMLOCK=infinity
+LimitNPROC=32768
+LimitAS=infinity
 
 [Install]
 WantedBy=multi-user.target
