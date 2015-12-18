@@ -73,6 +73,20 @@ class cassandra (
           before  => Service['cassandra'],
           require => Package[ $cassandra_package_name ];
 
+        "/etc/tmpfiles.d/cassandra.conf":
+          ensure  => file,
+          owner   => root,
+          group   => root,
+          mode    => 0755,
+          source  => 'puppet:///modules/cassandra/cassandra.conf';
+
+        "/var/run/cassandra":
+          ensure  => directory,
+          owner   => cassandra,
+          group   => cassandra,
+          mode    => 0755,
+          require => Package[ $cassandra_package_name ];
+
         }
 
       }
