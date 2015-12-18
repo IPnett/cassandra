@@ -71,7 +71,7 @@ class cassandra (
         "/etc/rc.d/init.d/cassandra":
           ensure  => absent,
           before  => Service['cassandra'],
-          after   => Package[ $cassandra_package_name ];
+          require => Package[ $cassandra_package_name ];
 
         }
 
